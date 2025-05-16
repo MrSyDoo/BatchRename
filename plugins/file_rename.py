@@ -20,15 +20,6 @@ from info import AUTH_CHANNEL
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
 
-@Client.on_callback_query(filters.regex('rename'))
-async def rename(bot, update):
-    await update.message.delete()
-    await update.message.reply_text("__Pʟᴇᴀꜱᴇ Eɴᴛᴇʀ Nᴇᴡ Fɪʟᴇɴᴀᴍᴇ...__💦",
-                                    reply_to_message_id=update.message.reply_to_message.id,
-                                    reply_markup=ForceReply(True))
-
-# Define the main message handler for private messages with replies
-
 
 @Client.on_message(filters.private & filters.reply)
 async def refunc(client, message):
@@ -66,17 +57,12 @@ async def refunc(client, message):
             reply_markup=InlineKeyboardMarkup(button)
         )
 
-# Define the callback for the 'upload' buttons
-
-
 @Client.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
 
-    # Creating Directory for Metadata
     if not os.path.isdir("Metadata"):
         os.mkdir("Metadata")
 
-    # Extracting necessary information
     prefix = await db.get_prefix(update.message.chat.id)
     suffix = await db.get_suffix(update.message.chat.id)
     new_name = update.message.text
