@@ -23,9 +23,9 @@ async def cb_handler(client, query: CallbackQuery):
 
             reply_markup=InlineKeyboardMarkup([[
                 InlineKeyboardButton(
-                    '⛅ Uᴩᴅᴀᴛᴇꜱ', url='https://t.me/{Config.UPDATES}'),
+                    "⛅ Uᴩᴅᴀᴛᴇꜱ", url=f"https://t.me/{Config.UPDATES}"),
                 InlineKeyboardButton(
-                    'Sᴜᴩᴩᴏʀᴛ ⛈️', url='https://t.me/{Config.SUPPORT}')
+                    "Sᴜᴩᴩᴏʀᴛ ⛈️", url=f"https://t.me/{Config.SUPPORT}")
             ], [
                 InlineKeyboardButton('❄️ Δʙᴏᴜᴛ', callback_data='about'),
                 InlineKeyboardButton('Hᴇʟᴩ ❗', callback_data='help')
