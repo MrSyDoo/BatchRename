@@ -19,8 +19,6 @@ import pyromod
 if not os.path.exists("received_files"):
     os.makedirs("received_files")
 
-CHANNELS = ["-1002464733363", "-1002429058090", "-1002433450358"]
-MSYD = -1002377676305
 
 logging.config.fileConfig('logging.conf')
 logging.getLogger().setLevel(logging.INFO)
