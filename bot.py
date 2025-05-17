@@ -16,10 +16,6 @@ from time import sleep
 import pyromod
 
 
-if not os.path.exists("received_files"):
-    os.makedirs("received_files")
-
-
 logging.config.fileConfig('logging.conf')
 logging.getLogger().setLevel(logging.INFO)
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
