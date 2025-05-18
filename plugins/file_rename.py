@@ -13,9 +13,8 @@ import asyncio
 import logging
 import os
 import time
-from helper.utils import add_prefix_suffix, client, start_clone_bot, is_req_subscribed
+from helper.utils import add_prefix_suffix, client, start_clone_bot
 from config import Config
-from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
