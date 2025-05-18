@@ -15,8 +15,8 @@ class Config(object):
     DB_NAME = os.environ.get("DB_NAME", "cluster0")
     DB_URL = os.environ.get("DB_URL", "")  # ⚠️ Required
 
-    SUPPORT = os.environ.get("SUPPORT", "syd_xyz") #Without @ Or Modify
-    UPDATES = os.environ.get("UPDATES", "syd_xyz") #Without @
+    SUPPORT = os.environ.get("SUPPORT", "url") #Without @ Or Modify
+    UPDATES = os.environ.get("UPDATES", "url") #Without @
 
     # other configs
     BOT_UPTIME = time.time()
