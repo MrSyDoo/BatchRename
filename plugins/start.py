@@ -6,8 +6,6 @@ from pyrogram.errors import FloodWait, ChatAdminRequired
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, CallbackQuery
 from helper.database import db
 from config import Config, Txt
-from info import AUTH_CHANNEL
-from helper.utils import is_req_subscribed
 import humanize
 from time import sleep
 
