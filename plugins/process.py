@@ -13,8 +13,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMedi
 from pyrogram.enums import ParseMode, MessageMediaType
 from helper.database import db
 from config import Config, Txt
-from info import AUTH_CHANNEL
-from helper.utils import progress_for_pyrogram, convert, humanbytes, add_prefix_suffix, is_req_subscribed, client, start_clone_bot, remove_path
+from helper.utils import progress_for_pyrogram, convert, humanbytes, add_prefix_suffix, client, start_clone_bot, remove_path
 from helper.ffmpeg import fix_thumb, take_screen_shot, change_metadata
 import humanize
 
