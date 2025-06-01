@@ -16,6 +16,62 @@ pattern4 = re.compile(r'S(\d+)\s*[-E ]\s*(\d+)', re.IGNORECASE)
 # Pattern X: Standalone Episode Number
 patternX = re.compile(r'\b(?!\d{3,4}p\b)\d{3,4}\b', re.IGNORECASE)
 
+pattern5 = re.compile(r'\b(?:.*?(\d{3,4}[^\dp]*p).*?|.*?(\d{3,4}p))\b', re.IGNORECASE)
+# Pattern 6: Find 4k in brackets or parentheses
+pattern6 = re.compile(r'[([<{]?\s*4k\s*[)\]>}]?', re.IGNORECASE)
+# Pattern 7: Find 2k in brackets or parentheses
+pattern7 = re.compile(r'[([<{]?\s*2k\s*[)\]>}]?', re.IGNORECASE)
+# Pattern 8: Find HdRip without spaces
+pattern8 = re.compile(r'[([<{]?\s*HdRip\s*[)\]>}]?|\bHdRip\b', re.IGNORECASE)
+# Pattern 9: Find 4kX264 in brackets or parentheses
+pattern9 = re.compile(r'[([<{]?\s*4kX264\s*[)\]>}]?', re.IGNORECASE)
+# Pattern 10: Find 4kx265 in brackets or parentheses
+pattern10 = re.compile(r'[([<{]?\s*4kx265\s*[)\]>}]?', re.IGNORECASE)
+
+def extract_quality(filename):
+    # Try Quality Patterns
+    match5 = re.search(pattern5, filename)
+    if match5:
+        print("Matched Pattern 5")
+        quality5 = match5.group(1) or match5.group(2)  # Extracted quality from both patterns
+        print(f"Quality: {quality5}")
+        return quality5
+
+    match6 = re.search(pattern6, filename)
+    if match6:
+        print("Matched Pattern 6")
+        quality6 = "4k"
+        print(f"Quality: {quality6}")
+        return quality6
+
+    match7 = re.search(pattern7, filename)
+    if match7:
+        print("Matched Pattern 7")
+        quality7 = "2k"
+        print(f"Quality: {quality7}")
+        return quality7
+
+    match8 = re.search(pattern8, filename)
+    if match8:
+        print("Matched Pattern 8")
+        quality8 = "HdRip"
+        print(f"Quality: {quality8}")
+        return quality8
+
+    match9 = re.search(pattern9, filename)
+    if match9:
+        print("Matched Pattern 9")
+        quality9 = "4kX264"
+        print(f"Quality: {quality9}")
+        return quality9
+
+    match10 = re.search(pattern10, filename)
+    if match10:
+        print("Matched Pattern 10")
+        quality10 = "4kx265"
+        print(f"Quality: {quality10}")
+        return quality10    
+    return None
 def extract_episode_number(filename):    
     match = re.search(pattern1, filename)
     if match:
