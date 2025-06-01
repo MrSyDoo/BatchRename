@@ -252,7 +252,7 @@ async def handle_sedia(client: Client, message: Message):
 
     if not batch_no:
         # Fetch all keyword entries for the user
-        keyword_entries = await db.usr.find({"user_id": user_id}).to_list(length=100)
+        keyword_entries = await db.usrs.find({"user_id": user_id}).to_list(length=100)
         
         if not keyword_entries:
             return await message.reply(
