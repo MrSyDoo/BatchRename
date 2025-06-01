@@ -285,11 +285,9 @@ async def process_key(bot, update, key):
     if not data:
         return await client.send_message(update.from_user.id, "❌ No data found for that key.")
     dump = data["dump"]
-    await client.send_message(update.from_user.id, " kskks")
     if not os.path.isdir("Metadata"):
         os.mkdir("Metadata")
     message = update
-    await client.send_message(update.from_user.id, " kskks")
     if message.document:
         type = "document"
         file_name = message.document.file_name
@@ -314,7 +312,7 @@ async def process_key(bot, update, key):
         else:
             new_name = new_name.replace("Quality", "")
     await client.send_message(update.from_user.id, " kskks")
-    new_filename_ = new_name
+    new_filename = new_name
     
     _bool_metadata = await db.get_metadata(update.from_user.id)
 
