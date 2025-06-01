@@ -41,6 +41,17 @@ async def cb_handler(client, query: CallbackQuery):
             ),
 
             reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ʜᴏᴡ ᴛᴏ ʀᴇɴᴀᴍᴇ ꜰɪʟᴇꜱ", callback_data="how")
+            ], [
+                InlineKeyboardButton("ᴛʜᴜᴍʙɴᴀɪʟ", callback_data="pic"),
+                InlineKeyboardButton("ᴄᴀᴩᴛɪᴏɴ", callback_data="cap")
+            ], [
+                InlineKeyboardButton("ꜱᴜꜰꜰɪx ᴀɴᴅ ᴩʀᴇꜰɪx", callback_data="sufpre")
+            ], [
+                InlineKeyboardButton("ᴅᴜᴍᴩ ᴄʜᴀɴɴᴇʟ", callback_data="dump")
+            ], [
+                InlineKeyboardButton("ᴍᴇᴛᴀᴅᴀᴛᴀ", callback_data="meta")
+            ], [
                 InlineKeyboardButton("ᴋᴇʏᴡᴏʀᴅꜱ", callback_data="list_keys")
             ], [                      
                 InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="start"),
