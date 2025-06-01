@@ -4,6 +4,53 @@ import re
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ForceReply
 import asyncio
 from plugins.features import features_button, extract_episode_number
+from pyrogram.errors import UserNotParticipant
+
+
+@Client.on_message(filters.command("set") & filters.private)
+async def set_command(client: Client, message: Message):
+    user_id = message.from_user.id
+    chat_id = message.chat.id
+
+    try:
+        rf_msg = await client.ask(chat_id, "✏️ Send the **rename format**. Use `{filename}` and `{ext}` as placeholders.")
+        rename_format = rf_msg.text.strip()
+
+        kw_msg = await client.ask(chat_id, "📝 Send the **keyword** you want to use:")
+        keyword = kw_msg.text.strip()
+
+        # 3. Ask for thumbnail
+        thumb_msg = await client.ask(chat_id, "🖼️ Send a **thumbnail** (as photo).")
+        if not thumb_msg.photo:
+            return await client.send_message(chat_id, "❌ That wasn't a photo. Process cancelled.")
+        thumbnail_file_id = thumb_msg.photo.file_id
+
+        # 4. Ask for forwarded message
+        fwd_msg = await client.ask(chat_id, "📨 Now **forward a message from the channel** you want to link.")
+        if not fwd_msg.forward_from_chat:
+            return await client.send_message(chat_id, "❌ Not a forwarded message from a channel. Cancelled.")
+
+        channel = fwd_msg.forward_from_chat
+
+        # 5. Check bot membership in channel
+        try:
+            await client.get_chat_member(channel.id, "me")
+        except UserNotParticipant:
+            return await client.send_message(chat_id, "❌ I'm not in that channel. Please add me and try again.")
+
+        # 6. Save to database
+        await db.usrs.insert_one({
+            "user_id": user_id,
+            "keyword": keyword,
+            "rename_format": rename_format,
+            "thumbnail": thumbnail_file_id,
+            "channel_id": channel.id,
+            "channel_title": channel.title or "Untitled"
+        })
+
+        await client.send_message(chat_id, f"✅ Settings saved successfully under keyword: `{keyword}`.")
+    except Exception as e:
+        await client.send_message(chat_id, f"❌ Error: {e}")
 
 @Client.on_callback_query(filters.regex('^allinone'))
 async def hale_filters(bot: Client, query: CallbackQuery):
