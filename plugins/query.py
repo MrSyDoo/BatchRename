@@ -99,7 +99,7 @@ async def cb_handler(client, query: CallbackQuery):
             [InlineKeyboardButton(text=item['keyword'], callback_data=f"showkey_{item['keyword']}")]
             for item in user_data
         ]
-        
+        buttons.append([InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help")])
         await query.message.edit_media(
             InputMediaPhoto(
                 random.choice(Config.PICS),
