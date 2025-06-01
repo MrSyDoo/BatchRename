@@ -44,7 +44,7 @@ async def set_command(client: Client, message: Message):
             "keyword": keyword,
             "rename_format": rename_format,
             "thumbnail": thumbnail_file_id,
-            "channel_id": channel.id,
+            "dump": channel.id,
             "channel_title": channel.title or "Untitled"
         })
 
