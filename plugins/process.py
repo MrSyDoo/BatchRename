@@ -281,7 +281,7 @@ async def process_queue(bot, update, type, dump):
                               
 async def process_key(bot, update, key):
     client = bot
-    data = await usr.find_one({"user_id": update.from_user.id, "keyword": keyword})
+    data = await usrs.find_one({"user_id": update.from_user.id, "keyword": keyword})
     dump = data["dump"]
     if not os.path.isdir("Metadata"):
         os.mkdir("Metadata")
