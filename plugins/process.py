@@ -296,21 +296,17 @@ async def process_queue(bot, update, key):
   #  elif message.audio:
        # file_name = message.audio.file_name
        # fle_size = message.audio.file_size
+       
+    new_name = data["rename_format"]
+    if "Episode" in new_name:
+       ep = extract_episode_number(file_name)
+       new_name = new_name.replace("Episode", ep)
         
-
-    # Extracting necessary information
-    prefix = await db.get_prefix(update.from_user.id)
-    suffix = await db.get_suffix(update.from_user.id)
-    
-    new_name = fule_name.replace("_", " ")
+    if "Quality" in new_name:
+       qu = extract_episode_number(file_name)
+       new_name = new_name.replace("Quality", qu)
     new_filename_ = new_name
-    try:
-        # adding prefix and suffix
-        new_filename = add_prefix_suffix(new_filename_, prefix, suffix)
-
-    except Exception as e:
-        return await client.send_message(update.from_user.id, f"⚠️ Sᴏᴍᴇᴛʜɪɴ Wᴇɴᴛ Wʀᴏɴɢ CᴀN'ᴛ ʙʟᴇ Tᴏ Sᴇᴛ <b>Pʀᴇꜰɪx</b> oʀ <b>Sᴜꜰꜰɪx</b> ☹️ \n\n🎋Nᴇᴇᴅ Sᴜᴩᴩᴏʀᴛ, Fᴏʀᴡᴀʀᴅ Tʜɪꜱ Mᴇꜱꜱᴀɢᴇ Tᴏ Mʏ Cʀᴇᴀᴛᴏʀ <a href=https://t.me/Syd_Xyz>ᴍʀ ѕчδ 🌍</a>\nεɾɾσɾ: {e}")
-
+    
     _bool_metadata = await db.get_metadata(update.from_user.id)
 
     
@@ -349,7 +345,7 @@ async def process_queue(bot, update, key):
     media = getattr(file, file.media.value)
 
     c_caption = await db.get_caption(update.from_user.id)
-    c_thumb = await db.get_thumbnail(update.from_user.id)
+    c_thumb = data["thumbnail"]
 
     if c_caption:
         try:
