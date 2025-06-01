@@ -433,6 +433,7 @@ async def process_key(bot, update, key):
                 await bot.delete_messages(from_chat, mg_id)
 
         except Exception as e:
+            await ms.edit(f" Eʀʀᴏʀ {e}")
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
@@ -440,7 +441,7 @@ async def process_key(bot, update, key):
                 os.remove(metadata_path)
             if path:
                 os.remove(path)
-            return await ms.edit(f" Eʀʀᴏʀ {e}")
+            return 
 
     else:
         try:
@@ -478,6 +479,7 @@ async def process_key(bot, update, key):
 
                 file_size = filw.audio.file_size
         except Exception as e:
+            await ms.edit(f" Eʀʀᴏʀ {e}")
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
@@ -485,7 +487,7 @@ async def process_key(bot, update, key):
                 os.remove(metadata_path)
             if path:
                 os.remove(path)
-            return await ms.edit(f" Eʀʀᴏʀ {e}")
+            return
 
     await ms.delete()
     if abs(file_size - fle_size) > 10 * 1024 * 1024:
