@@ -81,7 +81,86 @@ async def cb_handler(client, query: CallbackQuery):
     elif data == "cancel_delete_all":
         await query.answer("❎ Cancelled deleting all keywords.", show_alert=True)
         await query.message.delete()
-        
+
+    elif data == "meta":
+        await query.message.edit_media(
+            InputMediaPhoto(
+                random.choice(Config.PICS),
+                Txt.META_TXT,
+            ),
+
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
+                InlineKeyboardButton("ᴄʟᴏsᴇ ✘", callback_data="close")
+                
+            ]])
+        )
+    elif data == "dump":
+        await query.message.edit_media(
+            InputMediaPhoto(
+                random.choice(Config.PICS),
+                Txt.DUMP_TXT,
+            ),
+
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
+                InlineKeyboardButton("ᴄʟᴏsᴇ ✘", callback_data="close")
+                
+            ]])
+        )
+    
+    elif data == "cap":
+        await query.message.edit_media(
+            InputMediaPhoto(
+                random.choice(Config.PICS),
+                Txt.CAP_TXT,
+            ),
+
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
+                InlineKeyboardButton("ᴄʟᴏsᴇ ✘", callback_data="close")
+                
+            ]])
+        )
+    elif data == "how":
+        await query.message.edit_media(
+            InputMediaPhoto(
+                random.choice(Config.PICS),
+                Txt.HOW_TXT,
+            ),
+
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
+                InlineKeyboardButton("ᴄʟᴏsᴇ ✘", callback_data="close")
+                
+            ]])
+        )
+    elif data == "sufpre":
+        await query.message.edit_media(
+            InputMediaPhoto(
+                random.choice(Config.PICS),
+                Txt.SUFPRE_TXT,
+            ),
+
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
+                InlineKeyboardButton("ᴄʟᴏsᴇ ✘", callback_data="close")
+                
+            ]])
+        )
+    elif data == "pic":
+        await query.message.edit_media(
+            InputMediaPhoto(
+                random.choice(Config.PICS),
+                Txt.PIC_TXT,
+            ),
+
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
+                InlineKeyboardButton("ᴄʟᴏsᴇ ✘", callback_data="close")
+                
+            ]])
+        )
     elif data == "about":
         await query.message.edit_media(
             InputMediaPhoto(
