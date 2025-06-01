@@ -12,6 +12,7 @@ class Database:
         self.col = self.db.user
         self.bot = self.db.bots
         self.usr = self.db.usyds
+        self.usrs = self.db.auto
         self.req = self.db.requests
         self.batches = self.db.batches
         self.active_batches = self.db.active_batches
