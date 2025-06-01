@@ -25,20 +25,19 @@ async def set_command(client: Client, message: Message):
             return await client.send_message(chat_id, "❌ That wasn't a photo. Process cancelled.")
         thumbnail_file_id = thumb_msg.photo.file_id
 
-        # 4. Ask for forwarded message
         fwd_msg = await client.ask(chat_id, "📨 Now **forward a message from the channel** you want to link.")
         if not fwd_msg.forward_from_chat:
             return await client.send_message(chat_id, "❌ Not a forwarded message from a channel. Cancelled.")
 
         channel = fwd_msg.forward_from_chat
-
-        # 5. Check bot membership in channel
         try:
             await client.get_chat_member(channel.id, "me")
         except UserNotParticipant:
             return await client.send_message(chat_id, "❌ I'm not in that channel. Please add me and try again.")
 
-        # 6. Save to database
+
+        if "." not in rename_format:
+            rename_format += ".mkv"
         await db.usrs.insert_one({
             "user_id": user_id,
             "keyword": keyword,
