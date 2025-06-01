@@ -38,6 +38,8 @@ async def set_command(client: Client, message: Message):
 
         if "." not in rename_format:
             rename_format += ".mkv"
+        elif not rename_format.lower().endswith((".mkv", ".mp4", ".avi", ".mov", ".flv", ".webm", ".ts", ".m4v")):
+            rename_format += ".mkv"
         await db.usrs.insert_one({
             "user_id": user_id,
             "keyword": keyword,
