@@ -242,21 +242,54 @@ async def end_btch(client, message):
     ]]
     await message.reply_text(text, reply_markup=InlineKeyboardMarkup(button))
 
+
 @Client.on_message(filters.private & (filters.document | filters.video))
-async def handle_sedia(client, message):
+async def handle_sedia(client: Client, message: Message):
     user_id = message.from_user.id
-    batch_no = await db.get_active_batch(user_id)
-    if not batch_no:
-        return await message.reply("Send new filename Or Use /batch For **Auto**", reply_markup=ForceReply(), reply_to_message_id=message.id)
     media = message.document or message.video
+    filename = (media.file_name or "").lower()
+    batch_no = await db.get_active_batch(user_id)
+
+    if not batch_no:
+        # Fetch all keyword entries for the user
+        keyword_entries = await db.usr.find({"user_id": user_id}).to_list(length=100)
+        
+        if not keyword_entries:
+            return await message.reply(
+                "⚠️ No active batch found.\n\nSend new filename or use /batch for **auto** mode.",
+                reply_markup=ForceReply(),
+                reply_to_message_id=message.id
+            )
+
+        matched_keywords = [entry["keyword"] for entry in keyword_entries if entry.get("keyword", "").lower() in filename]
+
+        if len(matched_keywords) > 1:
+            return await message.reply(
+                f"❌ Multiple keywords matched in filename: `{', '.join(matched_keywords)}`\nPlease delete unnecessary keywords using `/del <keyword>` or `/clearmydata`.",
+                quote=True
+            )
+
+        if len(matched_keywords) == 1:
+            keyword = matched_keywords[0].lower()
+            await process_key(client, message, keyword)
+            return await message.reply_text("🆗 Keyword match found. Proceeding with keyword.")
+
+        return await message.reply(
+            "⚠️ No keyword match and no batch.\n\nSend new filename or use /batch for **auto** mode.",
+            reply_markup=ForceReply(),
+            reply_to_message_id=message.id
+        )
+
+    # Batch exists: store file directly
     await db.add_file_to_batch(
-        user_id,
-        batch_no,
-        message.id,
-        media.file_name,
-        "document" if message.document else "video"
+        user_id=user_id,
+        batch_no=batch_no,
+        message_id=message.id,
+        file_name=media.file_name,
+        file_type="document" if message.document else "video"
     )
-    await message.reply_text("ᴀᴅᴅᴇᴅ")
+    await message.reply_text("✅ ᴀᴅᴅᴇᴅ")
+
 
     
 @Client.on_message(filters.private & filters.command('set_prefix'))
