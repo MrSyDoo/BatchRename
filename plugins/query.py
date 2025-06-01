@@ -61,6 +61,50 @@ async def cb_handler(client, query: CallbackQuery):
         )
 
 
+    
+
+    elif data == "newformat":
+        await query.message.edit("Sᴇɴᴅ ᴛʜᴇ **ʀᴇɴᴀᴍᴇ ꜰᴏʀᴍᴀᴛ**. Uꜱᴇ `Episode` ᴀɴᴅ `Quality` ᴀꜱ ᴩʟᴀᴄᴇʜᴏʟᴅᴇʀꜱ.")
+        rf_msg = await client.listen(user_id)
+        rename_format = rf_msg.text.strip()
+
+        await client.send_message(user_id, "Sᴇɴᴅ ᴛʜᴇ **ᴋᴇʏᴡᴏʀᴅ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ:")
+        kw_msg = await client.listen(user_id)
+        keyword = kw_msg.text.strip()
+
+        await client.send_message(user_id, "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).")
+        thumb_msg = await client.listen(user_id)
+        if not thumb_msg.photo:
+            return await client.send_message(user_id, "Tʜᴀᴛ ᴡᴀꜱɴ'ᴛ ᴀ ᴩʜᴏᴛᴏ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
+        thumbnail_file_id = thumb_msg.photo.file_id
+
+        await client.send_message(user_id, "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴀ ᴍᴇꜱꜱᴀɢᴇ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.")
+        fwd_msg = await client.listen(user_id)
+        if not fwd_msg.forward_from_chat:
+            return await client.send_message(user_id, "Nᴏᴛ ꜰᴏʀᴡᴀʀᴅᴇᴅ ꜰʀᴏᴍ ᴀ ᴄʜᴀɴɴᴇʟ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
+
+        channel = fwd_msg.forward_from_chat
+        try:
+            await client.get_chat_member(channel.id, "me")
+        except UserNotParticipant:
+            return await client.send_message(user_id, "ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ ᴀɴᴅ ᴛʀʏ ᴀɢᴀɪɴ.")
+
+        if "." not in rename_format:
+            rename_format += ".mkv"
+        elif not rename_format.lower().endswith((".mkv", ".mp4", ".avi", ".mov", ".flv", ".webm", ".ts", ".m4v")):
+            rename_format += ".mkv"
+
+        await db.usrs.insert_one({
+            "user_id": user_id,
+            "keyword": keyword,
+            "rename_format": rename_format,
+            "thumbnail": thumbnail_file_id,
+            "dump": channel.id,
+            "channel_title": channel.title or "Untitled"
+        })
+
+        await client.send_message(user_id, f"Sᴇᴛᴛɪɴɢꜱ ꜱᴀᴠᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴜɴᴅᴇʀ ᴋᴇʏᴡᴏʀᴅ: `{keyword}`. ✅")
+
     elif data == "delete_all_keywords":
         buttons = [
             [
@@ -204,6 +248,8 @@ async def cb_handler(client, query: CallbackQuery):
 
         if not user_data:
             return await query.message.edit("😕 Yᴏᴜ ʜᴀᴠᴇ ɴᴏ ꜱᴀᴠᴇᴅ ᴋᴇʏᴡᴏʀᴅꜱ.", reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ᴀᴅᴅ ᴋᴇʏᴡᴏʀᴅ", callback_data="newformat")
+            ], [
                 InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
                 InlineKeyboardButton("✘ ᴄʟᴏsᴇ", callback_data="close")
                 
@@ -213,6 +259,7 @@ async def cb_handler(client, query: CallbackQuery):
             [InlineKeyboardButton(text=item['keyword'], callback_data=f"showkey_{item['keyword']}")]
             for item in user_data
         ]
+        buttons.append([InlineKeyboardButton("ᴀᴅᴅ ᴋᴇʏᴡᴏʀᴅ", callback_data="newformat")])
         buttons.append([InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
                        InlineKeyboardButton("ᴅᴇʟᴇᴛᴇ ᴀʟʟ", callback_data="delete_all_keywords")])
         await query.message.edit_media(
