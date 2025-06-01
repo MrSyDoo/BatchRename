@@ -304,14 +304,12 @@ async def process_key(bot, update, key):
     if "Episode" in new_name:
         ep = extract_episode_number(file_name)
         new_name = new_name.replace("Episode", ep)
-    await client.send_message(update.from_user.id, " kskks")
     if "Quality" in new_name:
         qu = extract_episode_number(file_name)
         if qu:
             new_name = new_name.replace("Quality", qu)
         else:
             new_name = new_name.replace("Quality", "")
-    await client.send_message(update.from_user.id, " kskks")
     new_filename = new_name
     
     _bool_metadata = await db.get_metadata(update.from_user.id)
