@@ -53,8 +53,8 @@ async def cb_handler(client, query: CallbackQuery):
     elif data == "delete_all_keywords":
         buttons = [
             [
-                InlineKeyboardButton("✅ Confirm Delete All", callback_data="delete_all_keywords_confirm"),
-                InlineKeyboardButton("❌ Cancel", callback_data="cancel_delete_all")
+                InlineKeyboardButton("ᴄᴏɴꜰɪʀᴍ ✓", callback_data="delete_all_keywords_confirm"),
+                InlineKeyboardButton("ᴄᴀɴᴄᴇʟ ✘", callback_data="cancel_delete_all")
             ]
         ]
         await query.message.edit_text(
@@ -65,10 +65,12 @@ async def cb_handler(client, query: CallbackQuery):
     elif data == "delete_all_keywords_confirm":
         result = await db.usrs.delete_many({"user_id": user_id})
         await query.answer(f"✅ Deleted all your keywords ({result.deleted_count}).", show_alert=True)
-
+        await query.message.delete()
+        
     elif data == "cancel_delete_all":
         await query.answer("❎ Cancelled deleting all keywords.", show_alert=True)
-
+        await query.message.delete()
+        
     elif data == "about":
         await query.message.edit_media(
             InputMediaPhoto(
