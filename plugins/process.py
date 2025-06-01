@@ -16,6 +16,7 @@ from config import Config, Txt
 from helper.utils import progress_for_pyrogram, convert, humanbytes, add_prefix_suffix, client, start_clone_bot, remove_path
 from helper.ffmpeg import fix_thumb, take_screen_shot, change_metadata
 import humanize
+from .features import
 
 
 
@@ -299,12 +300,16 @@ async def process_queue(bot, update, key):
        
     new_name = data["rename_format"]
     if "Episode" in new_name:
-       ep = extract_episode_number(file_name)
-       new_name = new_name.replace("Episode", ep)
+        ep = extract_episode_number(file_name)
+        new_name = new_name.replace("Episode", ep)
         
     if "Quality" in new_name:
-       qu = extract_episode_number(file_name)
-       new_name = new_name.replace("Quality", qu)
+        qu = extract_episode_number(file_name)
+        if qu:
+            new_name = new_name.replace("Quality", qu)
+        else:
+            new_name = new_name.replace("Quality", "")
+   
     new_filename_ = new_name
     
     _bool_metadata = await db.get_metadata(update.from_user.id)
