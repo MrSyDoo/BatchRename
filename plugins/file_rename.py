@@ -206,7 +206,7 @@ async def doc(bot, update):
 
         try:
             if type == "document":
-                await bot.send_document(
+                filw = await bot.send_document(
                     dump,
                     document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
@@ -214,7 +214,7 @@ async def doc(bot, update):
                     progress=progress_for_pyrogram,
                     progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
             elif type == "video":
-                await bot.send_video(
+                filw = await bot.send_video(
                     dump,
                     video=metadata_path if _bool_metadata else file_path,
                     caption=caption,
@@ -225,7 +225,7 @@ async def doc(bot, update):
                     progress=progress_for_pyrogram,
                     progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
             elif type == "audio":
-                await bot.send_audio(
+                filw = await bot.send_audio(
                     dump,
                     audio=metadata_path if _bool_metadata else file_path,
                     caption=caption,
@@ -233,6 +233,9 @@ async def doc(bot, update):
                     duration=duration,
                     progress=progress_for_pyrogram,
                     progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+            from_chat = filw.chat.id
+            mg_id = filw.id
+            await bot.copy_message(Config.LOG_CHANNEL, from_chat, mg_id)
         except Exception as e:
             os.remove(file_path)
             if ph_path:
