@@ -99,8 +99,15 @@ async def cb_handler(client, query: CallbackQuery):
             [InlineKeyboardButton(text=item['keyword'], callback_data=f"showkey_{item['keyword']}")]
             for item in user_data
         ]
-        await query.message.edit("📌 Your Saved Keywords:", reply_markup=InlineKeyboardMarkup(buttons))
-
+        
+        await query.message.edit_media(
+            InputMediaPhoto(
+                random.choice(Config.PICS),
+                "📌 Your Saved Keywords:",
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+    
+    
     elif data.startswith("showkey_"):
         keyword = data.split("showkey_")[1]
         entry = await db.usrs.find_one({"user_id": user_id, "keyword": keyword})
