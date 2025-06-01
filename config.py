@@ -50,7 +50,8 @@ Yᴏᴜ Cᴀɴ Rᴇɴᴀᴍᴇ & Cʜᴀɴɢᴇ Tʜᴜᴍʙɴᴀɪʟ Oꜰ Δɴʏ 
 ➥ Vᴇʀsɪᴏɴ : v1.0
 ╰───────────────⍟ """
 
-    HELP_TXT = """
+    HELP_TXT = """Hᴇʀᴇ Iꜱ Mʏ Hᴇʟᴩ Cᴏᴍᴍᴀɴᴅ."""
+    HELLP_TXT = """
 ◽ <b><u>Hᴏᴡ Tᴏ Sᴇᴛ Tʜᴜᴍʙɴɪʟᴇ</u></b>
   
 <b>•></b> /start Tʜᴇ Bᴏᴛ Aɴᴅ Sᴇɴᴅ Aɴy Pʜᴏᴛᴏ Tᴏ Aᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟy Sᴇᴛ Tʜᴜᴍʙɴɪʟᴇ.
@@ -81,6 +82,57 @@ Exᴀᴍᴩʟᴇ:- <code> /set_caption 📕 Fɪʟᴇ Nᴀᴍᴇ: {filename}
 <b>•></b> /del_suffix - Dᴇʟᴇᴛᴇ ꜱᴜꜰꜰɪx
 """
 
+    DUMP_TXT = """<b><u>Dᴜᴍᴩ Cʜᴀɴɴᴇʟ:</u></b>
+A Cʜᴀɴɴᴇʟ Tᴏ Wʜɪᴄʜ Aʟʟ Rᴇɴᴀᴍᴇᴅ Fɪʟᴇꜱ Mᴜꜱᴛ Bᴇ Sᴇɴᴛ Aᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟ
+◽ <b><u>Sᴇᴛ ᴅᴜᴍᴩ ᴄʜᴀɴɴᴇʟ.</b></u>
+<b>•></b> /set_dump - Sᴇᴛ ᴅᴜᴍᴩ ᴄʜᴀɴɴᴇʟ
+<b>•></b> /del_dump - Dᴇʟᴇᴛᴇ ᴅᴜᴍᴩ(ᴅᴇꜰᴜᴀʟᴛ ᴛᴏ ᴛʜᴇ ꜱᴇɴᴅᴇʀ ɪᴅ)
+<b>•></b> /see_dump - Sᴇᴇ ᴄᴜʀʀᴇɴᴛ ᴅᴜᴍᴩ ɪᴅ"""
+
+    HOW_TXT = """
+◽ <b><u>Hᴏᴡ Tᴏ Rᴇɴᴀᴍᴇ A Fɪʟᴇ</u></b>
+<b>•></b> Sᴇɴᴅ Aɴy Fɪʟᴇ Aɴᴅ Tyᴩᴇ Nᴇᴡ Fɪʟᴇ Nᴀᴍᴇ \nAɴᴅ Sᴇʟᴇᴄᴛ Tʜᴇ Fᴏʀᴍᴀᴛ [ document, video, audio ].   
+Sᴇɴᴅ Fɪʟᴇ Tᴏ Kɴᴏᴡ Mᴏʀᴇ.. 😮‍💨"""
+
+
+    META_TXT = """
+❪ SET CUSTOM METADATA ❫
+◽ <b><u>Tᴏ Cʜᴀɴɢᴇ Fɪʟᴇ Iɴꜰᴏʀᴍᴀᴛɪᴏɴꜱ </b></u>
+<b>•></b> /metadata - Tᴏ ᴛᴜʀɴ ᴏꜰꜰ/ᴏɴ ᴀɴᴅ ꜱᴇᴇ ᴍᴇᴛᴀᴅᴀᴛᴀ
+<b>•></b> /set_metadata - Tᴏ ᴄʜᴀɴɢᴇ ᴍᴇᴛᴅᴀᴛᴀ
+☞ Fᴏʀ Exᴀᴍᴘʟᴇ:-
+<code>--change-title Powered By:- @Kdramaland --change-author @Vizean --change-video-title By:- @Vizean --change-audio-title By :- @Kdramaland --change-subtitle-title Subtitled By :- @Kdramaland</code>
+"""
+
+    CAP_TXT = """
+◽ <b><u>Hᴏᴡ Tᴏ Sᴇᴛ Cᴜꜱᴛᴏᴍ Cᴀᴩᴛɪᴏɴ</u></b>
+
+<b>•></b> /set_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Sᴇᴛ ᴀ Cᴜꜱᴛᴏᴍ Cᴀᴩᴛɪᴏɴ
+<b>•></b> /see_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Vɪᴇᴡ Yᴏᴜʀ Cᴜꜱᴛᴏᴍ Cᴀᴩᴛɪᴏɴ
+<b>•></b> /del_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Dᴇʟᴇᴛᴇ Yᴏᴜʀ Cᴜꜱᴛᴏᴍ Cᴀᴩᴛɪᴏɴ
+Exᴀᴍᴩʟᴇ:- <code> /set_caption 📕 Fɪʟᴇ Nᴀᴍᴇ: {filename}
+💾 Sɪᴢᴇ: {filesize}
+⏰ Dᴜʀᴀᴛɪᴏɴ: {duration} </code>
+"""
+    PIC_TXT = """ 
+◽ <b><u>Hᴏᴡ Tᴏ Sᴇᴛ Tʜᴜᴍʙɴɪʟᴇ</u></b>
+  
+<b>•></b> /start Tʜᴇ Bᴏᴛ Aɴᴅ Sᴇɴᴅ Aɴy Pʜᴏᴛᴏ Tᴏ Aᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟy Sᴇᴛ Tʜᴜᴍʙɴɪʟᴇ.
+<b>•></b> /del_thumb Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Dᴇʟᴇᴛᴇ Yᴏᴜʀ Oʟᴅ Tʜᴜᴍʙɴɪʟᴇ.
+<b>•></b> /view_thumb Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Vɪᴇᴡ Yᴏᴜʀ Cᴜʀʀᴇɴᴛ Tʜᴜᴍʙɴɪʟᴇ.
+
+<u><b><blockqoute>Jᴜꜱᴛ Sᴇɴᴅ Tʜᴇ Pɪᴄᴛᴜʀᴇ.. ⚡</blockqoute></u></b>"""
+
+    SUFPRE_TXT = """ 
+◽ <b><u>Sᴇᴛ ꜱᴜꜰꜰɪx ᴀɴᴅ ᴩʀᴇꜰɪx.</b></u>
+<b>•></b> /set_prefix - Sᴇᴛ ᴩʀᴇꜰɪx(ꜰɪʀꜱᴛ ᴡᴏʀᴅ)
+<b>•></b> /set_suffix - Sᴇᴛ ꜱᴜꜰꜰɪx(ʟᴀꜱᴛ ᴡᴏʀᴅ)
+<b>•></b> /see_prefix - Sᴇᴇ ᴩʀᴇꜰɪx
+<b>•></b> /see_suffix - Sᴇᴇ ꜱᴜꜰꜰɪx
+<b>•></b> /del_prefix - Dᴇʟᴇᴛᴇ ᴩʀᴇꜰɪx
+<b>•></b> /del_suffix - Dᴇʟᴇᴛᴇ ꜱᴜꜰꜰɪx
+"""
+    
     SEND_METADATA = """
 ❪ SET CUSTOM METADATA ❫
 
