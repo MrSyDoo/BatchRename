@@ -113,7 +113,11 @@ async def cb_handler(client, query: CallbackQuery):
         user_data = await cursor.to_list(length=100)
 
         if not user_data:
-            return await query.message.edit("😕 You have no saved keywords.")
+            return await query.message.edit("😕 You have no saved keywords.", reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
+                InlineKeyboardButton("✘ ᴄʟᴏsᴇ", callback_data="close")
+                
+            ]]))
 
         buttons = [
             [InlineKeyboardButton(text=item['keyword'], callback_data=f"showkey_{item['keyword']}")]
