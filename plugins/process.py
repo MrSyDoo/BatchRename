@@ -279,7 +279,7 @@ async def process_queue(bot, update, type, dump):
         #os.remove(path)
    
                               
-async def process_queue(bot, update, key):
+async def process_key(bot, update, key):
     client = bot
     data = await usr.find_one({"user_id": update.from_user.id, "keyword": keyword})
     dump = data["dump"]
