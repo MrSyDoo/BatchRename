@@ -271,8 +271,9 @@ async def handle_sedia(client: Client, message: Message):
 
         if len(matched_keywords) == 1:
             keyword = matched_keywords[0].lower()
+            await message.reply_text("🆗 Keyword match found. Proceeding with keyword.")
             await process_key(client, message, keyword)
-            return await message.reply_text("🆗 Keyword match found. Proceeding with keyword.")
+            return
 
         return await message.reply(
             "⚠️ No keyword match and no batch.\n\nSend new filename or use /batch for **auto** mode.",
