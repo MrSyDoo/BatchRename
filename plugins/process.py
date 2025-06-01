@@ -286,30 +286,22 @@ async def process_queue(bot, update, key):
         os.mkdir("Metadata")
     message = update
     if message.document:
+        type = "document"
         file_name = message.document.file_name
         fle_size = message.document.file_size
     elif message.video:
+        type = "video"
         file_name = message.video.file_name
         fle_size = message.video.file_size
-    elif message.audio:
-        file_name = message.audio.file_name
-        fle_size = message.audio.file_size
+  #  elif message.audio:
+       # file_name = message.audio.file_name
+       # fle_size = message.audio.file_size
         
 
     # Extracting necessary information
     prefix = await db.get_prefix(update.from_user.id)
     suffix = await db.get_suffix(update.from_user.id)
-    swaps = await db.get_swaps(update.from_user.id)
-    rep_data = await db.get_rep(update.from_user.id)
-    try:
-        fule_name = file_name.replace(rep_data['old'], rep_data['new'])
-        if swaps:
-            for old, new in swaps.items():
-                fule_name = fule_name.replace(old, new)
-        
-    except Exception as e:
-        await client.send_message(update.from_user.id, f"Error During Swap : {e}")
-        pass
+    
     new_name = fule_name.replace("_", " ")
     new_filename_ = new_name
     try:
