@@ -280,8 +280,9 @@ async def process_queue(bot, update, type, dump):
    
                               
 async def process_key(bot, update, key):
-    await client.send_message(update.from_user.id, " kskks")
     client = bot
+    await client.send_message(update.from_user.id, " kskks")
+    
     data = await usrs.find_one({"user_id": update.from_user.id, "keyword": keyword})
     dump = data["dump"]
     await client.send_message(update.from_user.id, " kskks")
