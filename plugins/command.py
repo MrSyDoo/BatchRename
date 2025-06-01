@@ -13,7 +13,7 @@ async def set_command(client: Client, message: Message):
     chat_id = message.chat.id
 
     try:
-        rf_msg = await client.ask(chat_id, "✏️ Send the **rename format**. Use `{filename}` and `{ext}` as placeholders.")
+        rf_msg = await client.ask(chat_id, "✏️ Send the **rename format**. Use `Episode` and `Quality` as placeholders.")
         rename_format = rf_msg.text.strip()
 
         kw_msg = await client.ask(chat_id, "📝 Send the **keyword** you want to use:")
