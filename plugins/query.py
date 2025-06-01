@@ -113,7 +113,7 @@ async def cb_handler(client, query: CallbackQuery):
         user_data = await cursor.to_list(length=100)
 
         if not user_data:
-            return await query.message.edit("😕 You have no saved keywords.", reply_markup=InlineKeyboardMarkup([[
+            return await query.message.edit("😕 Yᴏᴜ ʜᴀᴠᴇ ɴᴏ ꜱᴀᴠᴇᴅ ᴋᴇʏᴡᴏʀᴅꜱ.", reply_markup=InlineKeyboardMarkup([[
                 InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
                 InlineKeyboardButton("✘ ᴄʟᴏsᴇ", callback_data="close")
                 
@@ -128,7 +128,7 @@ async def cb_handler(client, query: CallbackQuery):
         await query.message.edit_media(
             InputMediaPhoto(
                 random.choice(Config.PICS),
-                "📌 Your Saved Keywords:",
+                "• Yᴏᴜʀ Sᴀᴠᴇᴅ Kᴇʏᴡᴏʀᴅꜱ:",
             ),
             reply_markup=InlineKeyboardMarkup(buttons)
         )
@@ -142,16 +142,16 @@ async def cb_handler(client, query: CallbackQuery):
             return await query.message.edit("❌ Keyword data not found.")
 
         msg = (
-            f"🔑 **Keyword**: `{entry['keyword']}`\n"
-            f"📝 **Rename Format**: `{entry.get('rename_format', 'N/A')}`\n"
-            f"🖼 **Thumbnail**: `{entry.get('thumbnail', 'N/A')}`\n"
-            f"📤 **Dump Channel ID**: `{entry.get('dump', 'N/A')}`\n"
-            f"📺 **Channel Title**: `{entry.get('channel_title', 'N/A')}`"
+            f"• **Kᴇʏᴡᴏʀᴅ**: `{entry['keyword']}`\n"
+            f"• **Rᴇɴᴀᴍᴇ Fᴏʀᴍᴀᴛ**: `{entry.get('rename_format', 'N/A')}`\n"
+            f"• **Tʜᴜᴍʙɴᴀɪʟ**: `{entry.get('thumbnail', 'N/A')}`\n"
+            f"• **Dᴜᴍᴩ Cʜᴀɴɴᴇʟ Iᴅ**: `{entry.get('dump', 'N/A')}`\n"
+            f"• **Dᴜᴍᴩ Tɪᴛʟᴇ**: `{entry.get('channel_title', 'N/A')}`"
         )
 
         buttons = [[
-            InlineKeyboardButton("🗑 Delete", callback_data=f"delkey_{keyword}"),
-            InlineKeyboardButton("🔙 Back", callback_data="list_keys")
+            InlineKeyboardButton("ᴅᴇʟᴇᴛᴇ", callback_data=f"delkey_{keyword}"),
+            InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="list_keys")
         ]]
         await query.message.edit(msg, reply_markup=InlineKeyboardMarkup(buttons))
 
@@ -161,11 +161,11 @@ async def cb_handler(client, query: CallbackQuery):
 
         if result.deleted_count:
             await query.answer("✅ Deleted")
-            await query.message.edit(f"🗑 Deleted keyword `{keyword}`.", reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🔙 Back", callback_data="list_keys")]
+            await query.message.edit(f"ᴅᴇʟᴇᴛᴇᴅ ᴛʜᴇ ᴋᴇʏᴡᴏʀᴅ: `{keyword}`.", reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="list_keys")]
             ]))
         else:
-            await query.answer("❌ Not found or already deleted")
+            await query.answer("❌ Nᴏᴛ ꜰᴏᴜɴᴅ ᴏʀ ᴀʟʀᴇᴀᴅʏ ᴅᴇʟᴇᴛᴇᴅ")
 
     
     elif data == 'userbot':
