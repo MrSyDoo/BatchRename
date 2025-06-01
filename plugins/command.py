@@ -7,33 +7,33 @@ from plugins.features import features_button, extract_episode_number
 from pyrogram.errors import UserNotParticipant
 from plugins.process import process_key
 
-@Client.on_message(filters.command("set") & filters.private)
+@Client.on_message(filters.command("newformat") & filters.private)
 async def set_command(client: Client, message: Message):
     user_id = message.from_user.id
     chat_id = message.chat.id
 
     try:
-        rf_msg = await client.ask(chat_id, "✏️ Send the **rename format**. Use `Episode` and `Quality` as placeholders.")
+        rf_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴛʜᴇ **ʀᴇɴᴀᴍᴇ ꜰᴏʀᴍᴀᴛ**. Uꜱᴇ `Episode` ᴀɴᴅ `Quality` ᴀꜱ ᴩʟᴀᴄᴇʜᴏʟᴅᴇʀꜱ.")
         rename_format = rf_msg.text.strip()
 
-        kw_msg = await client.ask(chat_id, "📝 Send the **keyword** you want to use:")
+        kw_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴛʜᴇ **ᴋᴇʏᴡᴏʀᴅ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ:")
         keyword = kw_msg.text.strip()
 
         # 3. Ask for thumbnail
-        thumb_msg = await client.ask(chat_id, "🖼️ Send a **thumbnail** (as photo).")
+        thumb_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).")
         if not thumb_msg.photo:
-            return await client.send_message(chat_id, "❌ That wasn't a photo. Process cancelled.")
+            return await client.send_message(chat_id, "Tʜᴀᴛ ᴡᴀꜱɴ'ᴛ ᴀ ᴩʜᴏᴛᴏ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
         thumbnail_file_id = thumb_msg.photo.file_id
 
-        fwd_msg = await client.ask(chat_id, "📨 Now **forward a message from the channel** you want to link.")
+        fwd_msg = await client.ask(chat_id, "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴀ ᴍᴇꜱꜱᴀɢᴇ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.")
         if not fwd_msg.forward_from_chat:
-            return await client.send_message(chat_id, "❌ Not a forwarded message from a channel. Cancelled.")
+            return await client.send_message(chat_id, "Nᴏᴛ ꜰᴏʀᴡᴀʀᴅᴇᴅ ꜰʀᴏᴍ ᴀ ᴄʜᴀɴɴᴇʟ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
 
         channel = fwd_msg.forward_from_chat
         try:
             await client.get_chat_member(channel.id, "me")
         except UserNotParticipant:
-            return await client.send_message(chat_id, "❌ I'm not in that channel. Please add me and try again.")
+            return await client.send_message(chat_id, "ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ ᴀɴᴅ ᴛʀʏ ᴀɢᴀɪɴ.")
 
 
         if "." not in rename_format:
@@ -47,7 +47,7 @@ async def set_command(client: Client, message: Message):
             "channel_title": channel.title or "Untitled"
         })
 
-        await client.send_message(chat_id, f"✅ Settings saved successfully under keyword: `{keyword}`.")
+        await client.send_message(chat_id, f"Sᴇᴛᴛɪɴɢꜱ ꜱᴀᴠᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴜɴᴅᴇʀ ᴋᴇʏᴡᴏʀᴅ: `{keyword}`. ✅")
     except Exception as e:
         await client.send_message(chat_id, f"❌ Error: {e}")
 
