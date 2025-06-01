@@ -254,7 +254,10 @@ async def process_queue(bot, update, type, dump):
                     progress=progress_for_pyrogram,
                     progress_args=(f"⚠️ __**Renaming \n{file_name} \nto \n{new_filename}**__\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
 
-                file_size = filw.audio.file_size
+                file_size = filw.audio.file_sizesize
+                from_chat = filw.chat.id
+                mg_id = filw.id
+                await bot.copy_message(Config.LOG_CHANNEL, from_chat, mg_id)
         except Exception as e:
             os.remove(file_path)
             if ph_path:
@@ -476,6 +479,9 @@ async def process_key(bot, update, key):
                     progress_args=(f"⚠️ __**Renaming \n{file_name} \nto \n{new_filename}**__\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
 
                 file_size = filw.audio.file_size
+                from_chat = filw.chat.id
+                mg_id = filw.id
+                await bot.copy_message(Config.LOG_CHANNEL, from_chat, mg_id)
         except Exception as e:
             await ms.edit(f" Eʀʀᴏʀ {e}")
             os.remove(file_path)
