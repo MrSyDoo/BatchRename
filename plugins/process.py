@@ -173,8 +173,7 @@ async def process_queue(bot, update, type, dump):
                 time.sleep(2)
                 await bot.copy_message(update.from_user.id, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
-
+                
             elif type == "video":
                 filw = await app.send_video(
                     Config.LOG_CHANNEL,
@@ -192,7 +191,7 @@ async def process_queue(bot, update, type, dump):
                 time.sleep(2)
                 await bot.copy_message(update.from_user.id, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
+                
             elif type == "audio":
                 filw = await app.send_audio(
                     Config.LOG_CHANNEL,
@@ -208,8 +207,7 @@ async def process_queue(bot, update, type, dump):
                 time.sleep(2)
                 await bot.copy_message(dump, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
-
+                
         except Exception as e:
             os.remove(file_path)
             if ph_path:
@@ -255,9 +253,10 @@ async def process_queue(bot, update, type, dump):
                     progress_args=(f"⚠️ __**Renaming \n{file_name} \nto \n{new_filename}**__\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
 
                 file_size = filw.audio.file_sizesize
-                from_chat = filw.chat.id
-                mg_id = filw.id
-                await bot.copy_message(Config.LOG_CHANNEL, from_chat, mg_id)
+            from_chat = filw.chat.id
+            mg_id = filw.id
+            await bot.copy_message(Config.LOG_CHANNEL, from_chat, mg_id)
+        
         except Exception as e:
             os.remove(file_path)
             if ph_path:
@@ -396,7 +395,6 @@ async def process_key(bot, update, key):
                 time.sleep(2)
                 await bot.copy_message(update.from_user.id, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
 
             elif type == "video":
                 filw = await app.send_video(
@@ -415,7 +413,6 @@ async def process_key(bot, update, key):
                 time.sleep(2)
                 await bot.copy_message(update.from_user.id, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
             elif type == "audio":
                 filw = await app.send_audio(
                     Config.LOG_CHANNEL,
@@ -431,7 +428,7 @@ async def process_key(bot, update, key):
                 time.sleep(2)
                 await bot.copy_message(dump, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
+                
 
         except Exception as e:
             await ms.edit(f" Eʀʀᴏʀ {e}")
@@ -479,9 +476,9 @@ async def process_key(bot, update, key):
                     progress_args=(f"⚠️ __**Renaming \n{file_name} \nto \n{new_filename}**__\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
 
                 file_size = filw.audio.file_size
-                from_chat = filw.chat.id
-                mg_id = filw.id
-                await bot.copy_message(Config.LOG_CHANNEL, from_chat, mg_id)
+            from_chat = filw.chat.id
+            mg_id = filw.id
+            await bot.copy_message(Config.LOG_CHANNEL, from_chat, mg_id)
         except Exception as e:
             await ms.edit(f" Eʀʀᴏʀ {e}")
             os.remove(file_path)
