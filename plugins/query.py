@@ -104,6 +104,7 @@ async def cb_handler(client, query: CallbackQuery):
             InputMediaPhoto(
                 random.choice(Config.PICS),
                 "📌 Your Saved Keywords:",
+            ),
             reply_markup=InlineKeyboardMarkup(buttons)
         )
     
