@@ -49,7 +49,25 @@ async def cb_handler(client, query: CallbackQuery):
             ]])
         )
 
-   
+
+    elif data == "delete_all_keywords":
+        buttons = [
+            [
+                InlineKeyboardButton("✅ Confirm Delete All", callback_data="delete_all_keywords_confirm"),
+                InlineKeyboardButton("❌ Cancel", callback_data="cancel_delete_all")
+            ]
+        ]
+        await query.message.edit_text(
+            "⚠️ Are you sure you want to DELETE **ALL** your keywords? This action cannot be undone.",
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+
+    elif data == "delete_all_keywords_confirm":
+        result = await db.usrs.delete_many({"user_id": user_id})
+        await query.answer(f"✅ Deleted all your keywords ({result.deleted_count}).", show_alert=True)
+
+    elif data == "cancel_delete_all":
+        await query.answer("❎ Cancelled deleting all keywords.", show_alert=True)
 
     elif data == "about":
         await query.message.edit_media(
@@ -99,7 +117,8 @@ async def cb_handler(client, query: CallbackQuery):
             [InlineKeyboardButton(text=item['keyword'], callback_data=f"showkey_{item['keyword']}")]
             for item in user_data
         ]
-        buttons.append([InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help")])
+        buttons.append([InlineKeyboardButton("ᐊ ʙᴀᴄᴋ", callback_data="help"),
+                       InlineKeyboardButton("ᴅᴇʟᴇᴛᴇ ᴀʟʟ", callback_data="delete_all_keywords")])
         await query.message.edit_media(
             InputMediaPhoto(
                 random.choice(Config.PICS),
