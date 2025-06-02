@@ -87,7 +87,7 @@ async def cb_handler(client, query: CallbackQuery):
         try:
             await client.get_chat_member(channel.id, "me")
         except UserNotParticipant:
-            return await client.send_message(user_id, "ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ ᴀɴᴅ ᴛʀʏ ᴀɢᴀɪɴ.")
+            await client.send_message(user_id, "ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ ʜᴀꜱ ʙᴇᴇɴ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʏ, ʙᴜᴛ ꜰɪʟᴇꜱ ᴡᴏɴᴛ ʙᴇ ꜰᴏʀᴡᴀʀᴅᴇᴅ ᴛʜᴇʀᴇ ᴛɪʟʟ ʏᴏᴜ ᴀᴅᴅ ᴍᴇ \n⚠️ɴᴏᴛᴇ : ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ.")
 
         if "." not in rename_format:
             rename_format += ".mkv"
