@@ -33,7 +33,7 @@ async def set_command(client: Client, message: Message):
         try:
             await client.get_chat_member(channel.id, "me")
         except UserNotParticipant:
-            await client.send_message(chat_id, "ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ. ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ ʜᴀꜱ ʙᴇᴇɴ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʏ, ʙᴜᴛ ꜰɪʟᴇꜱ ᴡᴏɴᴛ ʙᴇ ꜰᴏʀᴡᴀʀᴅᴇᴅ ᴛʜᴇʀᴇ ᴛɪʟʟ ʏᴏᴜ ᴀᴅᴅ ᴍᴇ")
+            await client.send_message(chat_id, "ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ ʜᴀꜱ ʙᴇᴇɴ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʏ, ʙᴜᴛ ꜰɪʟᴇꜱ ᴡᴏɴᴛ ʙᴇ ꜰᴏʀᴡᴀʀᴅᴇᴅ ᴛʜᴇʀᴇ ᴛɪʟʟ ʏᴏᴜ ᴀᴅᴅ ᴍᴇ \n⚠️ɴᴏᴛᴇ : ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ.")
 
 
         if "." not in rename_format:
