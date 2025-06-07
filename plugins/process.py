@@ -53,7 +53,7 @@ async def handle_re_callback(client, callback_query):
     
 
 
-async def process_queue(bot, update, type, dump):
+async def process_queue(bot, update):
     client = bot
     if not os.path.isdir("Metadata"):
         os.mkdir("Metadata")
@@ -61,12 +61,15 @@ async def process_queue(bot, update, type, dump):
     if message.document:
         file_name = message.document.file_name
         fle_size = message.document.file_size
+        type = "document"
     elif message.video:
         file_name = message.video.file_name
         fle_size = message.video.file_size
+        type = "video"
     elif message.audio:
         file_name = message.audio.file_name
         fle_size = message.audio.file_size
+        type = "audio"
         
 
     # Extracting necessary information
@@ -152,7 +155,7 @@ async def process_queue(bot, update, type, dump):
             except Exception as e:
                 ph_path = None
                 print(e)
-
+    dump = await db.get_dump(update.from_user.id)
     if media.file_size > 2000 * 1024 * 1024:
         try:
             user_bot = await db.get_user_bot(Config.ADMIN[0])
