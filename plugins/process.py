@@ -286,7 +286,7 @@ async def process_key(bot, update, key):
     data = await db.usrs.find_one({"user_id": update.from_user.id, "keyword": key})
     if not data:
         return await client.send_message(update.from_user.id, "❌ No data found for that key.")
-    dump = data["dump"]
+    dump = data["dump"] if data["dump"] else await db.get_dump(update.from_user.id)
     if not os.path.isdir("Metadata"):
         os.mkdir("Metadata")
     message = update
@@ -352,7 +352,7 @@ async def process_key(bot, update, key):
     media = getattr(file, file.media.value)
 
     c_caption = await db.get_caption(update.from_user.id)
-    c_thumb = data["thumbnail"]
+    c_thumb = data["thumbnail"] if data["thumbnail"] else await db.get_thumbnail(update.from_user.id)
 
     if c_caption:
         try:
