@@ -19,21 +19,34 @@ async def set_command(client: Client, message: Message):
         kw_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴛʜᴇ **ᴋᴇʏᴡᴏʀᴅ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ:")
         keyword = kw_msg.text.strip()
 
-        # 3. Ask for thumbnail
-        thumb_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).")
-        if not thumb_msg.photo:
-            return await client.send_message(chat_id, "Tʜᴀᴛ ᴡᴀꜱɴ'ᴛ ᴀ ᴩʜᴏᴛᴏ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
-        thumbnail_file_id = thumb_msg.photo.file_id
 
-        fwd_msg = await client.ask(chat_id, "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴀ ᴍᴇꜱꜱᴀɢᴇ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.")
-        if not fwd_msg.forward_from_chat:
+        thumb_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).")
+
+        if thumb_msg.text and thumb_msg.text.strip() == "/default":
+            await client.send_message(chat_id, "Sᴇᴛᴛɪɴɢ Aꜱ Dᴇꜰᴀᴜʟᴛ....")
+            thumbnail_file_id = None
+
+        elif not thumb_msg.photo:
+            return await client.send_message(chat_id, "Tʜᴀᴛ ᴡᴀꜱɴ'ᴛ ᴀ ᴩʜᴏᴛᴏ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
+        else:
+            thumbnail_file_id = thumb_msg.photo.file_id
+
+        fwd_msg = await client.ask(chat_id, "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴀ ᴍᴇꜱꜱᴀɢᴇ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.\n\nᴏʀ ꜱᴇɴᴅ `/default` ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ.")
+
+        if fwd_msg.text and fwd_msg.text.strip() == "/default":
+            await client.send_message(chat_id, "Sᴇᴛᴛɪɴɢ ᴀꜱ ᴅᴇꜰᴀᴜʟᴛ...")
+            channel = None
+
+        elif not fwd_msg.forward_from_chat:
             return await client.send_message(chat_id, "Nᴏᴛ ꜰᴏʀᴡᴀʀᴅᴇᴅ ꜰʀᴏᴍ ᴀ ᴄʜᴀɴɴᴇʟ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
 
-        channel = fwd_msg.forward_from_chat
-        try:
-            await client.get_chat_member(channel.id, "me")
-        except UserNotParticipant:
-            await client.send_message(chat_id, "ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ ʜᴀꜱ ʙᴇᴇɴ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʏ, ʙᴜᴛ ꜰɪʟᴇꜱ ᴡᴏɴᴛ ʙᴇ ꜰᴏʀᴡᴀʀᴅᴇᴅ ᴛʜᴇʀᴇ ᴛɪʟʟ ʏᴏᴜ ᴀᴅᴅ ᴍᴇ \n⚠️ɴᴏᴛᴇ : ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ.")
+        else:
+            channel = fwd_msg.forward_from_chat
+
+            try:
+                await client.get_chat_member(channel.id, "me")
+            except UserNotParticipant:
+                await client.send_message(chat_id, "ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ ʜᴀꜱ ʙᴇᴇɴ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ, ʙᴜᴛ ꜰɪʟᴇꜱ ᴡᴏɴᴛ ʙᴇ ꜰᴏʀᴡᴀʀᴅᴇᴅ ᴛʜᴇʀᴇ ᴛɪʟʟ ʏᴏᴜ ᴀᴅᴅ ᴍᴇ \n⚠️ɴᴏᴛᴇ : ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ.")
 
 
         if "." not in rename_format:
