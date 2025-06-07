@@ -5,7 +5,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 import asyncio
 from plugins.features import features_button, extract_episode_number
 from pyrogram.errors import UserNotParticipant
-from plugins.process import process_key
+from plugins.process import process_key, process_queue
 
 @Client.on_message(filters.command("newformat") & filters.private)
 async def set_command(client: Client, message: Message):
@@ -265,15 +265,10 @@ async def handle_sedia(client: Client, message: Message):
     batch_no = await db.get_active_batch(user_id)
 
     if not batch_no:
-        # Fetch all keyword entries for the user
         keyword_entries = await db.usrs.find({"user_id": user_id}).to_list(length=100)
         
         if not keyword_entries:
-            return await message.reply(
-                "⚠️ No active batch found.\n\nSend new filename or use /batch for **auto** mode.",
-                reply_markup=ForceReply(),
-                reply_to_message_id=message.id
-            )
+            return await process_queue(client, message)
 
         matched_keywords = [entry["keyword"] for entry in keyword_entries if entry.get("keyword", "").lower() in filename]
 
@@ -289,22 +284,8 @@ async def handle_sedia(client: Client, message: Message):
             await process_key(client, message, keyword)
             return
 
-        return await message.reply(
-            "⚠️ No keyword match and no batch.\n\nSend new filename or use /batch for **auto** mode.",
-            reply_markup=ForceReply(),
-            reply_to_message_id=message.id
-        )
-
-    # Batch exists: store file directly
-    await db.add_file_to_batch(
-        user_id=user_id,
-        batch_no=batch_no,
-        message_id=message.id,
-        file_name=media.file_name,
-        file_type="document" if message.document else "video"
-    )
-    await message.reply_text("✅ ᴀᴅᴅᴇᴅ")
-
+        return await process_queue(client, message)
+    
 
     
 @Client.on_message(filters.private & filters.command('set_prefix'))
