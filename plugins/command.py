@@ -13,56 +13,100 @@ async def set_command(client: Client, message: Message):
     chat_id = message.chat.id
 
     try:
-        rf_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴛʜᴇ **ʀᴇɴᴀᴍᴇ ꜰᴏʀᴍᴀᴛ**. Uꜱᴇ `Episode` ᴀɴᴅ `Quality` ᴀꜱ ᴩʟᴀᴄᴇʜᴏʟᴅᴇʀꜱ.")
+        # 1️⃣  Rename-format
+        rf_msg = await client.ask(
+            chat_id,
+            "Sᴇɴᴅ ᴛʜᴇ **ʀᴇɴᴀᴍᴇ ꜰᴏʀᴍᴀᴛ**. Uꜱᴇ `Episode` ᴀɴᴅ `Quality` ᴀꜱ ᴩʟᴀᴄᴇʜᴏʟᴅᴇʀꜱ.\n\nSᴇɴᴅ /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
+        )
+        if rf_msg.text.strip().lower() == "/cancel":
+            return await client.send_message(chat_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
         rename_format = rf_msg.text.strip()
 
-        kw_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴛʜᴇ **ᴋᴇʏᴡᴏʀᴅ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ:")
+        # 2️⃣  Keyword
+        kw_msg = await client.ask(
+            chat_id,
+            "Sᴇɴᴅ ᴛʜᴇ **ᴋᴇʏᴡᴏʀᴅ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ:\n\nSᴇɴᴅ /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
+        )
+        if kw_msg.text.strip().lower() == "/cancel":
+            return await client.send_message(chat_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
         keyword = kw_msg.text.strip()
 
+        # 3️⃣  Thumbnail
+        thumb_msg = await client.ask(
+            chat_id,
+            "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).\nSᴇɴᴅ /default ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ ᴛʜᴜᴍʙ"
+        )
 
-        thumb_msg = await client.ask(chat_id, "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).")
-
-        if thumb_msg.text and thumb_msg.text.strip() == "/default":
-            await client.send_message(chat_id, "Sᴇᴛᴛɪɴɢ Aꜱ Dᴇꜰᴀᴜʟᴛ....")
+        if thumb_msg.text and thumb_msg.text.strip().lower() == "/default":
+            await client.send_message(chat_id, "Sᴇᴛᴛɪɴɢ ᴅᴇꜰᴀᴜʟᴛ ᴛʜᴜᴍʙɴᴀɪʟ...")
             thumbnail_file_id = None
-
         elif not thumb_msg.photo:
             return await client.send_message(chat_id, "Tʜᴀᴛ ᴡᴀꜱɴ'ᴛ ᴀ ᴩʜᴏᴛᴏ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
         else:
             thumbnail_file_id = thumb_msg.photo.file_id
 
-        fwd_msg = await client.ask(chat_id, "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴀ ᴍᴇꜱꜱᴀɢᴇ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.\n\nᴏʀ ꜱᴇɴᴅ `/default` ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ.")
+        # 4️⃣  Dump channels (list)
+        await client.send_message(
+            chat_id,
+            "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴍᴜʟᴛɪᴘʟᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟꜱ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.\n"
+            "Sᴇɴᴅ /done ᴡʜᴇɴ ꜰɪɴɪꜱʜᴇᴅ, /default ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ (ɴᴏ ᴅᴜᴍᴘ), /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
+        )
 
-        if fwd_msg.text and fwd_msg.text.strip() == "/default":
-            await client.send_message(chat_id, "Sᴇᴛᴛɪɴɢ ᴀꜱ ᴅᴇꜰᴀᴜʟᴛ...")
-            channel = None
+        dump_channels: list[str] = []
+        channel_titles: list[str] = []
 
-        elif not fwd_msg.forward_from_chat:
-            return await client.send_message(chat_id, "Nᴏᴛ ꜰᴏʀᴡᴀʀᴅᴇᴅ ꜰʀᴏᴍ ᴀ ᴄʜᴀɴɴᴇʟ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
+        while True:
+            fwd_msg = await client.listen(chat_id)
 
-        else:
+            if fwd_msg.text and fwd_msg.text.lower() in {"/done", "/default", "/cancel"}:
+                choice = fwd_msg.text.lower()
+                if choice == "/cancel":
+                    return await client.send_message(chat_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
+                if choice == "/default":
+                    dump_channels.clear()
+                break
+
+            if not fwd_msg.forward_from_chat:
+                await client.send_message(chat_id, "❌ Nᴏᴛ ꜰᴏʀᴡᴀʀᴅᴇᴅ ꜰʀᴏᴍ ᴀ ᴄʜᴀɴɴᴇʟ. Tʀʏ ᴀɢᴀɪɴ.")
+                continue
+
             channel = fwd_msg.forward_from_chat
-
             try:
                 await client.get_chat_member(channel.id, "me")
             except UserNotParticipant:
-                await client.send_message(chat_id, "ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ ʜᴀꜱ ʙᴇᴇɴ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ, ʙᴜᴛ ꜰɪʟᴇꜱ ᴡᴏɴᴛ ʙᴇ ꜰᴏʀᴡᴀʀᴅᴇᴅ ᴛʜᴇʀᴇ ᴛɪʟʟ ʏᴏᴜ ᴀᴅᴅ ᴍᴇ \n⚠️ɴᴏᴛᴇ : ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ.")
+                await client.send_message(
+                    chat_id,
+                    f"⚠️ ɴᴏᴛ ɪɴ {channel.title}. Aᴅᴅ ᴍᴇ ᴀɴᴅ ꜱᴇɴᴅ ᴀɢᴀɪɴ."
+                )
+                continue
 
+            if str(channel.id) not in dump_channels:
+                dump_channels.append(str(channel.id))
+                channel_titles.append(channel.title or "Untitled")
 
+        # 5️⃣  Fix rename-format extension
         if "." not in rename_format:
             rename_format += ".mkv"
-        elif not rename_format.lower().endswith((".mkv", ".mp4", ".avi", ".mov", ".flv", ".webm", ".ts", ".m4v")):
+        elif not rename_format.lower().endswith(
+            (".mkv", ".mp4", ".avi", ".mov", ".flv", ".webm", ".ts", ".m4v")
+        ):
             rename_format += ".mkv"
+
+        # 6️⃣  Store to DB
         await db.usrs.insert_one({
             "user_id": user_id,
             "keyword": keyword,
             "rename_format": rename_format,
             "thumbnail": thumbnail_file_id,
-            "dump": channel.id,
-            "channel_title": channel.title or "Untitled"
+            "dump": " ".join(dump_channels),      # no spaces
+            "channel_titles": channel_titles
         })
 
-        await client.send_message(chat_id, f"Sᴇᴛᴛɪɴɢꜱ ꜱᴀᴠᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴜɴᴅᴇʀ ᴋᴇʏᴡᴏʀᴅ: `{keyword}`. ✅")
+        await client.send_message(
+            chat_id,
+            f"✅ Sᴇᴛᴛɪɴɢꜱ ꜱᴀᴠᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴜɴᴅᴇʀ ᴋᴇʏᴡᴏʀᴅ: `{keyword}`."
+        )
+
     except Exception as e:
         await client.send_message(chat_id, f"❌ Error: {e}")
 
