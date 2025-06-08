@@ -64,46 +64,98 @@ async def cb_handler(client, query: CallbackQuery):
     
 
     elif data == "newformat":
-        await query.message.edit("Sᴇɴᴅ ᴛʜᴇ **ʀᴇɴᴀᴍᴇ ꜰᴏʀᴍᴀᴛ**. Uꜱᴇ `Episode` ᴀɴᴅ `Quality` ᴀꜱ ᴩʟᴀᴄᴇʜᴏʟᴅᴇʀꜱ.")
+        user_id = query.from_user.id
+
+        await query.message.edit(
+            "Sᴇɴᴅ ᴛʜᴇ **ʀᴇɴᴀᴍᴇ ꜰᴏʀᴍᴀᴛ**. Uꜱᴇ `Episode` ᴀɴᴅ `Quality` ᴀꜱ ᴩʟᴀᴄᴇʜᴏʟᴅᴇʀꜱ.\n\nSᴇɴᴅ /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
+        )
         rf_msg = await client.listen(user_id)
+        if rf_msg.text and rf_msg.text.strip().lower() == "/cancel":
+            return await client.send_message(user_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
         rename_format = rf_msg.text.strip()
 
-        await client.send_message(user_id, "Sᴇɴᴅ ᴛʜᴇ **ᴋᴇʏᴡᴏʀᴅ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ:")
+        await client.send_message(
+            user_id,
+            "Sᴇɴᴅ ᴛʜᴇ **ᴋᴇʏᴡᴏʀᴅ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ:\n\nSᴇɴᴅ /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
+        )
         kw_msg = await client.listen(user_id)
+        if kw_msg.text and kw_msg.text.strip().lower() == "/cancel":
+            return await client.send_message(user_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
         keyword = kw_msg.text.strip()
 
-        await client.send_message(user_id, "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).")
+        await client.send_message(
+            user_id,
+            "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).\nSᴇɴᴅ /default ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ ᴛʜᴜᴍʙ, /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
+        )
         thumb_msg = await client.listen(user_id)
-        if not thumb_msg.photo:
+
+        if thumb_msg.text and thumb_msg.text.strip().lower() == "/default":
+            await client.send_message(user_id, "Sᴇᴛᴛɪɴɢ ᴅᴇꜰᴀᴜʟᴛ ᴛʜᴜᴍʙɴᴀɪʟ...")
+            thumbnail_file_id = None
+        elif not thumb_msg.photo:
             return await client.send_message(user_id, "Tʜᴀᴛ ᴡᴀꜱɴ'ᴛ ᴀ ᴩʜᴏᴛᴏ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
-        thumbnail_file_id = thumb_msg.photo.file_id
+        else:
+            thumbnail_file_id = thumb_msg.photo.file_id
 
-        await client.send_message(user_id, "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴀ ᴍᴇꜱꜱᴀɢᴇ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.")
-        fwd_msg = await client.listen(user_id)
-        if not fwd_msg.forward_from_chat:
-            return await client.send_message(user_id, "Nᴏᴛ ꜰᴏʀᴡᴀʀᴅᴇᴅ ꜰʀᴏᴍ ᴀ ᴄʜᴀɴɴᴇʟ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
+        await client.send_message(
+            user_id,
+            "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴍᴜʟᴛɪᴘʟᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟꜱ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.\n"
+            "Sᴇɴᴅ /done ᴡʜᴇɴ ꜰɪɴɪꜱʜᴇᴅ, /default ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ (ɴᴏ ᴅᴜᴍᴘ), /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
+        )
 
-        channel = fwd_msg.forward_from_chat
-        try:
-            await client.get_chat_member(channel.id, "me")
-        except UserNotParticipant:
-            await client.send_message(user_id, "ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ ʜᴀꜱ ʙᴇᴇɴ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʏ, ʙᴜᴛ ꜰɪʟᴇꜱ ᴡᴏɴᴛ ʙᴇ ꜰᴏʀᴡᴀʀᴅᴇᴅ ᴛʜᴇʀᴇ ᴛɪʟʟ ʏᴏᴜ ᴀᴅᴅ ᴍᴇ \n⚠️ɴᴏᴛᴇ : ɪ'ᴍ ɴᴏᴛ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ. ᴩʟᴇᴀꜱᴇ ᴀᴅᴅ ᴍᴇ.")
+        dump_channels: list[str] = []
+        channel_titles: list[str] = []
+
+        while True:
+            fwd_msg = await client.listen(user_id)
+
+            if fwd_msg.text and fwd_msg.text.lower() in {"/done", "/default", "/cancel"}:
+                choice = fwd_msg.text.lower()
+                if choice == "/cancel":
+                    return await client.send_message(user_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
+                if choice == "/default":
+                    dump_channels.clear()          # keep empty (no dump)
+                break
+
+            if not fwd_msg.forward_from_chat:
+                await client.send_message(user_id, "❌ Nᴏᴛ ꜰᴏʀᴡᴀʀᴅᴇᴅ ꜰʀᴏᴍ ᴀ ᴄʜᴀɴɴᴇʟ. Tʀʏ ᴀɢᴀɪɴ.")
+                continue
+
+            channel = fwd_msg.forward_from_chat
+            try:
+                await client.get_chat_member(channel.id, "me")
+            except UserNotParticipant:
+                await client.send_message(
+                    user_id,
+                    f"⚠️ ɴᴏᴛ ɪɴ {channel.title}. Aᴅᴅ ᴍᴇ ᴀɴᴅ ꜱᴇɴᴅ ᴀɢᴀɪɴ."
+                )
+                continue
+
+            if str(channel.id) not in dump_channels:
+                dump_channels.append(str(channel.id))
+                channel_titles.append(channel.title or "Untitled")
 
         if "." not in rename_format:
             rename_format += ".mkv"
-        elif not rename_format.lower().endswith((".mkv", ".mp4", ".avi", ".mov", ".flv", ".webm", ".ts", ".m4v")):
+        elif not rename_format.lower().endswith(
+            (".mkv", ".mp4", ".avi", ".mov", ".flv", ".webm", ".ts", ".m4v")
+        ):
             rename_format += ".mkv"
+
 
         await db.usrs.insert_one({
             "user_id": user_id,
             "keyword": keyword,
             "rename_format": rename_format,
             "thumbnail": thumbnail_file_id,
-            "dump": channel.id,
-            "channel_title": channel.title or "Untitled"
+            "dump": "".join(dump_channels),        # saved without spaces
+            "channel_titles": channel_titles
         })
 
-        await client.send_message(user_id, f"Sᴇᴛᴛɪɴɢꜱ ꜱᴀᴠᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴜɴᴅᴇʀ ᴋᴇʏᴡᴏʀᴅ: `{keyword}`. ✅")
+        await client.send_message(
+            user_id,
+            f"Sᴇᴛᴛɪɴɢꜱ ꜱᴀᴠᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴜɴᴅᴇʀ ᴋᴇʏᴡᴏʀᴅ: `{keyword}`. ✅"
+        )
 
     elif data == "delete_all_keywords":
         buttons = [
