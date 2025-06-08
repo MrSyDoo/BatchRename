@@ -289,7 +289,7 @@ async def process_key(bot, update, key):
     data = await db.usrs.find_one({"user_id": update.from_user.id, "keyword": key})
     if not data:
         return await client.send_message(update.from_user.id, "❌ No data found for that key.")
-    dump = data["dump"] if data["dump"] else await db.get_dump(update.from_user.id)
+    dump = data["dump"]
     if not os.path.isdir("Metadata"):
         os.mkdir("Metadata")
     message = update
@@ -431,6 +431,18 @@ async def process_key(bot, update, key):
                 time.sleep(2)
                 await bot.copy_message(dump, from_chat, mg_id)
                 await ms.delete()
+           
+            if dump:
+                dump_ids = dump.split(" ") if dump else []
+                for syd in dump_ids:
+                    try:
+                        await bot.copy_message(syd, from_chat, mg_id)
+                    except Exception as e:
+                        await client.send_message(update.from_user.id, f"Error Sending To {syd}")
+                        await bot.copy_message(update.from_user.id, from_chat, mg_id)
+            else:
+                dup = await db.get_dump(update.from_user.id)
+                await bot.copy_message(dup, from_chat, mg_id)
                 
 
         except Exception as e:
@@ -448,7 +460,7 @@ async def process_key(bot, update, key):
         try:
             if type == "document":
                 filw = await bot.send_document(
-                    dump,
+                    Config.LOG_CHANNEL,
                     document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
                     caption=caption,
@@ -457,7 +469,7 @@ async def process_key(bot, update, key):
                 file_size = filw.document.file_size
             elif type == "video":
                 filw = await bot.send_video(
-                    dump,
+                    Config.LOG_CHANNEL,
                     video=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
@@ -470,7 +482,7 @@ async def process_key(bot, update, key):
                 file_size = filw.video.file_size
             elif type == "audio":
                 filw = await bot.send_audio(
-                    dump,
+                    Config.LOG_CHANNEL,
                     audio=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
@@ -481,7 +493,17 @@ async def process_key(bot, update, key):
                 file_size = filw.audio.file_size
             from_chat = filw.chat.id
             mg_id = filw.id
-            await bot.copy_message(Config.LOG_CHANNEL, from_chat, mg_id)
+            if dump:
+                dump_ids = dump.split(" ") if dump else []
+                for syd in dump_ids:
+                    try:
+                        await bot.copy_message(syd, from_chat, mg_id)
+                    except Exception as e:
+                        await client.send_message(update.from_user.id, f"Error Sending To {syd}")
+                        await bot.copy_message(update.from_user.id, from_chat, mg_id)
+            else:
+                dup = await db.get_dump(update.from_user.id)
+                await bot.copy_message(dup, from_chat, mg_id)
         except Exception as e:
             await ms.edit(f" Eʀʀᴏʀ {e}")
             os.remove(file_path)
