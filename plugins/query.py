@@ -82,7 +82,7 @@ async def cb_handler(client, query: CallbackQuery):
         if kw_msg.text and kw_msg.text.strip().lower() == "/cancel":
             return await client.send_message(user_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
         keyword = kw_msg.text.strip()
-
+        
         await client.send_message(
             user_id,
             "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).\nSᴇɴᴅ /default ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ ᴛʜᴜᴍʙ, /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
