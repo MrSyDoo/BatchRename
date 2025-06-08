@@ -286,7 +286,7 @@ async def process_queue(bot, update):
                               
 async def process_key(bot, update, key):
     client = bot
-    data = await db.usrs.find_one({"user_id": update.from_user.id, "keyword": key})
+    data = await db.usrs.find_one({"user_id": update.from_user.id, "keyword": key.lower()})
     if not data:
         return await client.send_message(update.from_user.id, "❌ No data found for that key.")
     dump = data["dump"]
