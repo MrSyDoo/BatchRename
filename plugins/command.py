@@ -26,7 +26,7 @@ async def set_command(client: Client, message: Message):
         )
         if kw_msg.text.strip().lower() == "/cancel":
             return await client.send_message(chat_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
-        keyword = kw_msg.text.strip()
+        keyword = kw_msg.text.strip().lower()
         thumb_msg = await client.ask(
             chat_id,
             "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).\nSᴇɴᴅ /default ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ ᴛʜᴜᴍʙ"
