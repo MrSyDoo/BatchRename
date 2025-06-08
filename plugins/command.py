@@ -13,7 +13,6 @@ async def set_command(client: Client, message: Message):
     chat_id = message.chat.id
 
     try:
-        # 1️⃣  Rename-format
         rf_msg = await client.ask(
             chat_id,
             "Sᴇɴᴅ ᴛʜᴇ **ʀᴇɴᴀᴍᴇ ꜰᴏʀᴍᴀᴛ**. Uꜱᴇ `Episode` ᴀɴᴅ `Quality` ᴀꜱ ᴩʟᴀᴄᴇʜᴏʟᴅᴇʀꜱ.\n\nSᴇɴᴅ /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
@@ -21,8 +20,6 @@ async def set_command(client: Client, message: Message):
         if rf_msg.text.strip().lower() == "/cancel":
             return await client.send_message(chat_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
         rename_format = rf_msg.text.strip()
-
-        # 2️⃣  Keyword
         kw_msg = await client.ask(
             chat_id,
             "Sᴇɴᴅ ᴛʜᴇ **ᴋᴇʏᴡᴏʀᴅ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜꜱᴇ:\n\nSᴇɴᴅ /cancel ᴛᴏ ᴄᴀɴᴄᴇʟ."
@@ -30,8 +27,6 @@ async def set_command(client: Client, message: Message):
         if kw_msg.text.strip().lower() == "/cancel":
             return await client.send_message(chat_id, "❌ Cᴀɴᴄᴇʟʟᴇᴅ.")
         keyword = kw_msg.text.strip()
-
-        # 3️⃣  Thumbnail
         thumb_msg = await client.ask(
             chat_id,
             "Sᴇɴᴅ ᴀ **ᴛʜᴜᴍʙɴᴀɪʟ** (ᴀꜱ ᴩʜᴏᴛᴏ).\nSᴇɴᴅ /default ᴛᴏ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ ᴛʜᴜᴍʙ"
@@ -44,8 +39,6 @@ async def set_command(client: Client, message: Message):
             return await client.send_message(chat_id, "Tʜᴀᴛ ᴡᴀꜱɴ'ᴛ ᴀ ᴩʜᴏᴛᴏ. Pʀᴏᴄᴇꜱꜱ ᴄᴀɴᴄᴇʟʟᴇᴅ....!")
         else:
             thumbnail_file_id = thumb_msg.photo.file_id
-
-        # 4️⃣  Dump channels (list)
         await client.send_message(
             chat_id,
             "Nᴏᴡ **ꜰᴏʀᴡᴀʀᴅ ᴍᴜʟᴛɪᴘʟᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ꜰʀᴏᴍ ᴛʜᴇ ᴄʜᴀɴɴᴇʟꜱ** ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴅᴜᴍᴩ.\n"
@@ -84,15 +77,13 @@ async def set_command(client: Client, message: Message):
                 dump_channels.append(str(channel.id))
                 channel_titles.append(channel.title or "Untitled")
 
-        # 5️⃣  Fix rename-format extension
         if "." not in rename_format:
             rename_format += ".mkv"
         elif not rename_format.lower().endswith(
             (".mkv", ".mp4", ".avi", ".mov", ".flv", ".webm", ".ts", ".m4v")
         ):
             rename_format += ".mkv"
-
-        # 6️⃣  Store to DB
+            
         await db.usrs.insert_one({
             "user_id": user_id,
             "keyword": keyword,
